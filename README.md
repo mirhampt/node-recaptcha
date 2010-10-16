@@ -42,7 +42,7 @@ structure like the following before the form in your document:
 app.js:
 
     var express  = require('express'),
-        Recaptcha = require('../lib/recaptcha').Recaptcha;
+        Recaptcha = require('recaptcha').Recaptcha;
 
     var PUBLIC_KEY  = 'YOUR_PUBLIC_KEY',
         PRIVATE_KEY = 'YOUR_PRIVATE_KEY';
