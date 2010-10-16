@@ -10,7 +10,7 @@ Via git:
 
 Via npm:
 
-    $ npm install node-recaptcha
+    $ npm install recaptcha
 
 ## Setup
 
