@@ -58,6 +58,7 @@ exports['verify() with no data'] = function(test) {
     recaptcha.verify(function(success, error_code) {
         test.strictEqual(success, false);
         test.strictEqual(error_code, 'verify-params-incorrect');
+        test.strictEqual(recaptcha.error_code, 'verify-params-incorrect');
 
         // Ensure that http.createClient() was never called.
         test.strictEqual(create_client_called, false);
@@ -83,6 +84,7 @@ exports['verify() with blank response'] = function(test) {
     recaptcha.verify(function(success, error_code) {
         test.strictEqual(success, false);
         test.strictEqual(error_code, 'incorrect-captcha-sol');
+        test.strictEqual(recaptcha.error_code, 'incorrect-captcha-sol');
 
         // Ensure that http.createClient() was never called.
         test.strictEqual(create_client_called, false);
@@ -107,6 +109,7 @@ exports['verify() with missing remoteip'] = function(test) {
     recaptcha.verify(function(success, error_code) {
         test.strictEqual(success, false);
         test.strictEqual(error_code, 'verify-params-incorrect');
+        test.strictEqual(recaptcha.error_code, 'verify-params-incorrect');
 
         // Ensure that http.createClient() was never called.
         test.strictEqual(create_client_called, false);
@@ -131,6 +134,7 @@ exports['verify() with missing challenge'] = function(test) {
     recaptcha.verify(function(success, error_code) {
         test.strictEqual(success, false);
         test.strictEqual(error_code, 'verify-params-incorrect');
+        test.strictEqual(recaptcha.error_code, 'verify-params-incorrect');
 
         // Ensure that http.createClient() was never called.
         test.strictEqual(create_client_called, false);
@@ -155,6 +159,7 @@ exports['verify() with missing response'] = function(test) {
     recaptcha.verify(function(success, error_code) {
         test.strictEqual(success, false);
         test.strictEqual(error_code, 'verify-params-incorrect');
+        test.strictEqual(recaptcha.error_code, 'verify-params-incorrect');
 
         // Ensure that http.createClient() was never called.
         test.strictEqual(create_client_called, false);
