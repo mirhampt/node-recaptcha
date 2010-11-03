@@ -1,14 +1,16 @@
-require.paths.push(__dirname + '/lib');
-var Recaptcha   = require('recaptcha').Recaptcha,
+//require.paths.push(__dirname + '/lib');
+var Recaptcha   = require(__dirname + '/lib/recaptcha').Recaptcha,
     http        = require('http'),
     events      = require('events'),
     querystring = require('querystring');
 
 exports['Recaptcha construction'] = function(test) {
-    var recaptcha = new Recaptcha('PUBLIC', 'PRIVATE');
+    var recaptcha = new Recaptcha('PUBLIC', 'PRIVATE', true);
 
     test.strictEqual(recaptcha.public_key, 'PUBLIC', 'public_key is set');
     test.strictEqual(recaptcha.private_key, 'PRIVATE', 'private_key is set');
+    test.strictEqual(recaptcha.is_secure, true, 'is_secure is set');
+    test.strictEqual(recaptcha.data, undefined, 'data is undefined');
     test.done();
 };
 
@@ -28,6 +30,22 @@ exports['toHTML() with no error'] = function(test) {
     test.done();
 };
 
+exports['toHTML() https with no error'] = function(test) {
+    var recaptcha = new Recaptcha('PUBLIC', 'PRIVATE', true);
+    var script_src = 'https://www.google.com/recaptcha/api/challenge?k=PUBLIC';
+    var noscript_src = 'https://www.google.com/recaptcha/api/noscript?k=PUBLIC';
+
+    var expected_html = '<script type="text/javascript" src="' + script_src + '">' +
+                        '</script><noscript><iframe src="' + noscript_src + '" ' +
+                        'height="300" width="500" frameborder="0"></iframe><br>' +
+                        '<textarea name="recaptcha_challenge_field" rows="3" cols="40">' +
+                        '</textarea><input type="hidden" name="recaptcha_response_field" ' +
+                        'value="manual_challenge"></noscript>';
+
+    test.strictEqual(recaptcha.toHTML(), expected_html, 'toHTML() https returns expected HTML');
+    test.done();
+};
+
 exports['toHTML() with error'] = function(test) {
     var recaptcha = new Recaptcha('PUBLIC', 'PRIVATE');
     recaptcha.error_code = 'ERROR';  // Fake an error.
@@ -43,6 +61,24 @@ exports['toHTML() with error'] = function(test) {
                         'value="manual_challenge"></noscript>';
 
     test.strictEqual(recaptcha.toHTML(), expected_html, 'toHTML() returns expected HTML');
+    test.done();
+};
+
+exports['toHTML() https with error'] = function(test) {
+    var recaptcha = new Recaptcha('PUBLIC', 'PRIVATE', true);
+    recaptcha.error_code = 'ERROR';  // Fake an error.
+
+    var script_src = 'https://www.google.com/recaptcha/api/challenge?k=PUBLIC&error=ERROR';
+    var noscript_src = 'https://www.google.com/recaptcha/api/noscript?k=PUBLIC&error=ERROR';
+
+    var expected_html = '<script type="text/javascript" src="' + script_src + '">' +
+                        '</script><noscript><iframe src="' + noscript_src + '" ' +
+                        'height="300" width="500" frameborder="0"></iframe><br>' +
+                        '<textarea name="recaptcha_challenge_field" rows="3" cols="40">' +
+                        '</textarea><input type="hidden" name="recaptcha_response_field" ' +
+                        'value="manual_challenge"></noscript>';
+
+    test.strictEqual(recaptcha.toHTML(), expected_html, 'toHTML() https returns expected HTML');
     test.done();
 };
 
