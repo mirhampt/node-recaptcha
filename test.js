@@ -1,4 +1,3 @@
-//require.paths.push(__dirname + '/lib');
 var Recaptcha   = require(__dirname + '/lib/recaptcha').Recaptcha,
     http        = require('http'),
     events      = require('events'),
