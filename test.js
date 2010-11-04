@@ -4,12 +4,22 @@ var Recaptcha   = require(__dirname + '/lib/recaptcha').Recaptcha,
     events      = require('events'),
     querystring = require('querystring');
 
-exports['Recaptcha construction'] = function(test) {
+exports['Recaptcha construction https'] = function(test) {
     var recaptcha = new Recaptcha('PUBLIC', 'PRIVATE', true);
 
     test.strictEqual(recaptcha.public_key, 'PUBLIC', 'public_key is set');
     test.strictEqual(recaptcha.private_key, 'PRIVATE', 'private_key is set');
     test.strictEqual(recaptcha.is_secure, true, 'is_secure is set');
+    test.strictEqual(recaptcha.data, undefined, 'data is undefined');
+    test.done();
+};
+
+exports['Recaptcha construction'] = function(test) {
+    var recaptcha = new Recaptcha('PUBLIC', 'PRIVATE');
+
+    test.strictEqual(recaptcha.public_key, 'PUBLIC', 'public_key is set');
+    test.strictEqual(recaptcha.private_key, 'PRIVATE', 'private_key is set');
+    test.strictEqual(recaptcha.is_secure, undefined, 'is_secure is not set');
     test.strictEqual(recaptcha.data, undefined, 'data is undefined');
     test.done();
 };
