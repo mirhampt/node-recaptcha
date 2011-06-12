@@ -50,7 +50,7 @@ app.js:
     var app = express.createServer();
 
     app.configure(function() {
-        app.use(express.bodyDecoder());
+        app.use(express.bodyParser());
     });
 
     app.get('/', function(req, res) {
