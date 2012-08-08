@@ -95,7 +95,7 @@ views/form.jade:
     form(method='POST', action='.')
       != recaptcha_form
 
-      input(type: 'submit', value: 'Check Recaptcha')
+      input(type='submit', value='Check Recaptcha')
 
 Make sure [express](http://www.expressjs.com) and [jade](http://jade-lang.com)
 are installed, then:
