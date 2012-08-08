@@ -96,7 +96,7 @@ exports['verify() with no data'] = function(test) {
     var create_client_called = false;
 
     // We shouldn't need to contact Recaptcha to know this is invalid.
-    http.createClient = function(port, host) {
+    http.request = function(port, host) {
         create_client_called = true;
     };
 
@@ -105,7 +105,7 @@ exports['verify() with no data'] = function(test) {
         test.strictEqual(error_code, 'verify-params-incorrect');
         test.strictEqual(recaptcha.error_code, 'verify-params-incorrect');
 
-        // Ensure that http.createClient() was never called.
+        // Ensure that http.request() was never called.
         test.strictEqual(create_client_called, false);
 
         test.done();
@@ -122,7 +122,7 @@ exports['verify() with blank response'] = function(test) {
     var create_client_called = false;
 
     // We shouldn't need to contact Recaptcha to know this is invalid.
-    http.createClient = function(port, host) {
+    http.request = function(port, host) {
         create_client_called = true;
     };
 
@@ -131,7 +131,7 @@ exports['verify() with blank response'] = function(test) {
         test.strictEqual(error_code, 'incorrect-captcha-sol');
         test.strictEqual(recaptcha.error_code, 'incorrect-captcha-sol');
 
-        // Ensure that http.createClient() was never called.
+        // Ensure that http.request() was never called.
         test.strictEqual(create_client_called, false);
 
         test.done();
@@ -147,7 +147,7 @@ exports['verify() with missing remoteip'] = function(test) {
     var create_client_called = false;
 
     // We shouldn't need to contact Recaptcha to know this is invalid.
-    http.createClient = function(port, host) {
+    http.request = function(port, host) {
         create_client_called = true;
     };
 
@@ -156,7 +156,7 @@ exports['verify() with missing remoteip'] = function(test) {
         test.strictEqual(error_code, 'verify-params-incorrect');
         test.strictEqual(recaptcha.error_code, 'verify-params-incorrect');
 
-        // Ensure that http.createClient() was never called.
+        // Ensure that http.request() was never called.
         test.strictEqual(create_client_called, false);
 
         test.done();
@@ -172,7 +172,7 @@ exports['verify() with missing challenge'] = function(test) {
     var create_client_called = false;
 
     // We shouldn't need to contact Recaptcha to know this is invalid.
-    http.createClient = function(port, host) {
+    http.request = function(port, host) {
         create_client_called = true;
     };
 
@@ -181,7 +181,7 @@ exports['verify() with missing challenge'] = function(test) {
         test.strictEqual(error_code, 'verify-params-incorrect');
         test.strictEqual(recaptcha.error_code, 'verify-params-incorrect');
 
-        // Ensure that http.createClient() was never called.
+        // Ensure that http.request() was never called.
         test.strictEqual(create_client_called, false);
 
         test.done();
@@ -197,7 +197,7 @@ exports['verify() with missing response'] = function(test) {
     var create_client_called = false;
 
     // We shouldn't need to contact Recaptcha to know this is invalid.
-    http.createClient = function(port, host) {
+    http.request = function(port, host) {
         create_client_called = true;
     };
 
@@ -206,7 +206,7 @@ exports['verify() with missing response'] = function(test) {
         test.strictEqual(error_code, 'verify-params-incorrect');
         test.strictEqual(recaptcha.error_code, 'verify-params-incorrect');
 
-        // Ensure that http.createClient() was never called.
+        // Ensure that http.request() was never called.
         test.strictEqual(create_client_called, false);
 
         test.done();
@@ -238,7 +238,7 @@ exports['verify() with bad data'] = function(test) {
     var fake_request = new events.EventEmitter();
     var fake_response = new events.EventEmitter();
 
-    http.createClient = function(port, host) {
+    http.request = function(port, host) {
         test.strictEqual(port, 80, 'port correct in createClient() call');
         test.strictEqual(host, 'www.google.com', 'host correct in createClient() call');
         return fake_client;
@@ -304,7 +304,7 @@ exports['verify() with good data'] = function(test) {
     var fake_request = new events.EventEmitter();
     var fake_response = new events.EventEmitter();
 
-    http.createClient = function(port, host) {
+    http.request = function(port, host) {
         test.strictEqual(port, 80, 'port correct in createClient() call');
         test.strictEqual(host, 'www.google.com', 'host correct in createClient() call');
         return fake_client;
