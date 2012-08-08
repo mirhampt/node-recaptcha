@@ -1,8 +1,11 @@
 {
     "name": "recaptcha",
     "description": "Display and verify a Recaptcha captcha",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "author": "Michael Hampton <mirhampt+github@gmail.com>",
     "main": "./lib/recaptcha.js",
-    "engines": { "node": ">= 0.2.0" }
+    "devDependencies": {
+      "nodeunit": "*"
+    },
+    "engines": { "node": ">= 0.6.0" }
 }
