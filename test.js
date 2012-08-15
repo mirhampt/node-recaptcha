@@ -96,7 +96,7 @@ exports['verify() with no data'] = function(test) {
     var create_client_called = false;
 
     // We shouldn't need to contact Recaptcha to know this is invalid.
-    http.request = function(port, host) {
+    http.request = function(options, callback) {
         create_client_called = true;
     };
 
@@ -122,7 +122,7 @@ exports['verify() with blank response'] = function(test) {
     var create_client_called = false;
 
     // We shouldn't need to contact Recaptcha to know this is invalid.
-    http.request = function(port, host) {
+    http.request = function(options, callback) {
         create_client_called = true;
     };
 
@@ -147,7 +147,7 @@ exports['verify() with missing remoteip'] = function(test) {
     var create_client_called = false;
 
     // We shouldn't need to contact Recaptcha to know this is invalid.
-    http.request = function(port, host) {
+    http.request = function(options, callback) {
         create_client_called = true;
     };
 
@@ -172,7 +172,7 @@ exports['verify() with missing challenge'] = function(test) {
     var create_client_called = false;
 
     // We shouldn't need to contact Recaptcha to know this is invalid.
-    http.request = function(port, host) {
+    http.request = function(options, callback) {
         create_client_called = true;
     };
 
@@ -197,7 +197,7 @@ exports['verify() with missing response'] = function(test) {
     var create_client_called = false;
 
     // We shouldn't need to contact Recaptcha to know this is invalid.
-    http.request = function(port, host) {
+    http.request = function(options, callback) {
         create_client_called = true;
     };
 
@@ -238,19 +238,19 @@ exports['verify() with bad data'] = function(test) {
     var fake_request = new events.EventEmitter();
     var fake_response = new events.EventEmitter();
 
-    http.request = function(port, host) {
-        test.strictEqual(port, 80, 'port correct in createClient() call');
-        test.strictEqual(host, 'www.google.com', 'host correct in createClient() call');
-        return fake_client;
-    };
-    fake_client.request = function(method, end_point, headers) {
-        test.strictEqual(method, 'POST', 'method correct in request() call');
-        test.strictEqual(end_point, '/recaptcha/api/verify', 'end_point correct in request() call');
-        test.deepEqual(headers, {
-            host:             'www.google.com',
-            'Content-Length': data_qs.length,
-            'Content-Type':   'application/x-www-form-urlencoded'
-        }, 'headers correct in request() call');
+    http.request = function(options, callback) {
+        test.deepEqual(options, {
+            host: 'www.google.com',
+            path: '/recaptcha/api/verify',
+            port: 80,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Length': data_qs.length
+            }
+        }, 'options for request() call are correct');
+
+        callback(fake_response);
         return fake_request;
     };
     fake_request.write = function(data, encoding) {
@@ -269,7 +269,7 @@ exports['verify() with bad data'] = function(test) {
         // Make sure that request.write() and request.end() were called.
         test.strictEqual(write_called, true, 'request.write() was called');
         test.strictEqual(end_called, true, 'request.end() was called');
-        
+
         test.done();
     });
 
@@ -304,19 +304,19 @@ exports['verify() with good data'] = function(test) {
     var fake_request = new events.EventEmitter();
     var fake_response = new events.EventEmitter();
 
-    http.request = function(port, host) {
-        test.strictEqual(port, 80, 'port correct in createClient() call');
-        test.strictEqual(host, 'www.google.com', 'host correct in createClient() call');
-        return fake_client;
-    };
-    fake_client.request = function(method, end_point, headers) {
-        test.strictEqual(method, 'POST', 'method correct in request() call');
-        test.strictEqual(end_point, '/recaptcha/api/verify', 'end_point correct in request() call');
-        test.deepEqual(headers, {
-            host:             'www.google.com',
-            'Content-Length': data_qs.length,
-            'Content-Type':   'application/x-www-form-urlencoded'
-        }, 'headers correct in request() call');
+    http.request = function(options, callback) {
+        test.deepEqual(options, {
+            host: 'www.google.com',
+            path: '/recaptcha/api/verify',
+            port: 80,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Length': data_qs.length
+            }
+        }, 'options for request() call are correct');
+
+        callback(fake_response);
         return fake_request;
     };
     fake_request.write = function(data, encoding) {
@@ -335,7 +335,7 @@ exports['verify() with good data'] = function(test) {
         // Make sure that request.write() and request.end() were called.
         test.strictEqual(write_called, true, 'request.write() was called');
         test.strictEqual(end_called, true, 'request.end() was called');
-        
+
         test.done();
     });
 
