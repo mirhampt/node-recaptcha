@@ -100,8 +100,7 @@ exports['verify() with no data'] = function(test) {
         create_client_called = true;
     };
 
-    recaptcha.verify(function(success, error_code) {
-        test.strictEqual(success, false);
+    recaptcha.verify(function(error_code) {
         test.strictEqual(error_code, 'verify-params-incorrect');
         test.strictEqual(recaptcha.error_code, 'verify-params-incorrect');
 
@@ -126,8 +125,7 @@ exports['verify() with blank response'] = function(test) {
         create_client_called = true;
     };
 
-    recaptcha.verify(function(success, error_code) {
-        test.strictEqual(success, false);
+    recaptcha.verify(function(error_code) {
         test.strictEqual(error_code, 'incorrect-captcha-sol');
         test.strictEqual(recaptcha.error_code, 'incorrect-captcha-sol');
 
@@ -151,8 +149,7 @@ exports['verify() with missing remoteip'] = function(test) {
         create_client_called = true;
     };
 
-    recaptcha.verify(function(success, error_code) {
-        test.strictEqual(success, false);
+    recaptcha.verify(function(error_code) {
         test.strictEqual(error_code, 'verify-params-incorrect');
         test.strictEqual(recaptcha.error_code, 'verify-params-incorrect');
 
@@ -176,8 +173,7 @@ exports['verify() with missing challenge'] = function(test) {
         create_client_called = true;
     };
 
-    recaptcha.verify(function(success, error_code) {
-        test.strictEqual(success, false);
+    recaptcha.verify(function(error_code) {
         test.strictEqual(error_code, 'verify-params-incorrect');
         test.strictEqual(recaptcha.error_code, 'verify-params-incorrect');
 
@@ -201,8 +197,7 @@ exports['verify() with missing response'] = function(test) {
         create_client_called = true;
     };
 
-    recaptcha.verify(function(success, error_code) {
-        test.strictEqual(success, false);
+    recaptcha.verify(function(error_code) {
         test.strictEqual(error_code, 'verify-params-incorrect');
         test.strictEqual(recaptcha.error_code, 'verify-params-incorrect');
 
@@ -261,8 +256,7 @@ exports['verify() with bad data'] = function(test) {
     fake_request.end = function() { end_called = true; };
 
     // Check callback values for verify.
-    recaptcha.verify(function(success, error_code) {
-        test.strictEqual(success, false, 'success is false');
+    recaptcha.verify(function(error_code) {
         test.strictEqual(error_code, 'incorrect-captcha-sol', 'error_code is correct');
         test.strictEqual(recaptcha.error_code,  'incorrect-captcha-sol', 'recaptcha.error_code is set');
 
@@ -327,8 +321,7 @@ exports['verify() with good data'] = function(test) {
     fake_request.end = function() { end_called = true; };
 
     // Check callback values for verify.
-    recaptcha.verify(function(success, error_code) {
-        test.strictEqual(success, true, 'success is true');
+    recaptcha.verify(function(error_code) {
         test.strictEqual(error_code, undefined, 'error_code is undefined');
         test.strictEqual(recaptcha.error_code, undefined, 'recaptcha.error_code is undefined');
 
