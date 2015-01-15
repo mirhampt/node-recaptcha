@@ -26,7 +26,7 @@ To run the tests for this module, you will first need to install
 
 ## Customizing the Recaptcha
 
-See these [instructions](http://code.google.com/apis/recaptcha/docs/customization.html)
+See these [instructions](https://developers.google.com/recaptcha/old/docs/customization)
 for help customizing the look of Recaptcha.  In brief, you will need to add a
 structure like the following before the form in your document:
 
