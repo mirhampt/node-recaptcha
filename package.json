@@ -1,7 +1,7 @@
 {
     "name": "recaptcha",
     "description": "Display and verify a Recaptcha captcha",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "author": "Michael Hampton <mirhampt+github@gmail.com>",
     "main": "./lib/recaptcha.js",
     "devDependencies": {
