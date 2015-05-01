@@ -103,3 +103,10 @@ Make sure [express](http://www.expressjs.com) and [jade](http://jade-lang.com)
 are installed, then:
 
     $ node app.js
+
+## Alternate to setting the language
+
+If you find that setting your language via the RecaptchaOptions isn't taking effect, you can try setting it in the toHTML function:
+```
+recaptcha.toHTML('fr')
+```
